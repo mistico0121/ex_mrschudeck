@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Tablero from './ex web'
+
 
 class BoatSelect extends Component{
 	//ALL INFO ON APP, AND HOW IT CHANGES OVER TIME :DDD
@@ -9,6 +11,20 @@ class BoatSelect extends Component{
 		readyBoats:[],
 		readyToStart:0
 	};
+
+	getInitialState() {
+		return {'tablero': this.state.tablero};
+		}
+
+	onBoardUpdate() {
+		this.setState({"tablero": this.state.tablero});
+		}
+
+	newGame(){
+		let tablero6 = new Tablero();
+		tablero6.tableReady();
+		this.setState({tablero: tablero6});
+	}
 
 	setBoat = (boat) => {
 		var index = this.state.boats.indexOf(boat);
@@ -60,14 +76,14 @@ class BoatSelect extends Component{
 				}
 
 				<div className='panel-control'>
-					<button onClick = {()=>this.resetSetup()}>Reset</button>
+					<button className='btn btn-primary' onClick = {()=>this.resetSetup()}>Reset</button>
 				</div>
 					
 					{
 						this.state.readyToStart ?
 
 						<React.Fragment>
-							<button onClick = {()=>this.resetSetup()}>Move</button>
+							<button className = 'btn btn-primary' onClick = {()=>this.resetSetup()}>Move</button>
 
 						</React.Fragment>:
 						<React.Fragment>
