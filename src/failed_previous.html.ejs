@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Examen mrschudeck</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="ex_mrschudeck.css">
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.8.0/react.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.8.0/JSXTransformer.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+    <script type="text/javascript" src ="ex_mrschudeck.js"></script>
+  </head>
+
+
+
+
+
+  <body>
+
+  	<div class = 'row'>
+
+  <div id = 'calculator'> 
+    <div class ="grid">
+      <% table6.matriz.forEach((row) => {  %>
+        <% row.forEach((cell) => {%>
+          <button class = "grid-element" id = "number7" value = "<%=cell%>"><%=cell%></button>
+        <%})%>
+      <%})%>
+    </div>
+  </div><div id = 'panel-control'>
+    <div class = 'column'>
+      <button class = "btn btn-primary" id = "fragata" value = "<%=table6.player1%>" > (F)ragata </button>
+    
+      <button class = 'btn btn-primary'> (D)estructor </button>
+    
+      <button class = 'btn btn-primary'> (C)rucero </button>
+  
+      <button class = 'btn btn-primary'> (P)ortaaviones </button>
+    </div>
+  </div>
+</div>
+
+  </body>
+  </html>
