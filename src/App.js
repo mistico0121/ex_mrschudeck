@@ -11,6 +11,8 @@ function App() {
 	let table6 = new Tablero();
 	table6.tableReady()
 	table6.printMatrix();
+	table6.setUpBoats();
+
 
 	let testStringApp = testString;
 
