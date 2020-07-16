@@ -81,6 +81,10 @@ body {
 }
 
 .btn-deactivated {
+
+  padding:5px;
+  margin:5px;
+  
   color: #fff;
   background-color: #999999;
   border-color: #999999;

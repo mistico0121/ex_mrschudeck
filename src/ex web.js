@@ -63,8 +63,9 @@ function Tablero(){
     this.player1 = new Player();
     this.globalBoatDict = {};
     this.placedBoats = [];
+    this.importantMessage = "";
     //this.player2 = new Player();
-    
+
     this.setUpBoat = function(boatID, posX, posY){
 
         if (this.matriz[posX][posY] != 0 ){
@@ -83,6 +84,7 @@ function Tablero(){
     }
 
     this.resetMatrix= function(){
+        this.player1 = new Player();
         var NewMatriz = [["."]];
 
         for (let k = 0; k<10; k++){
@@ -197,9 +199,16 @@ function Tablero(){
                 valid = 1;
             }
         } else if (posY == boat.currentPositionY && posX == boat.currentPositionX){
-            valid = 0
+            valid = 1
         }
         if (valid){
+
+
+            return true
+
+
+
+
             if (shotPos != 0){
                 console.log("LE HAS DISPARADO A UN BOTE ENEMIGO :o");
                 let shotId = this.globalBoatDict[shotPos].id;
@@ -226,7 +235,7 @@ function Tablero(){
     this.enemyShootsToCell = function(posX,posY){
 
         //SE ASUME QUE PC NO MANDA POSICIONES DE DISPARO INVALIDAS
-        //NUESTRA MATRIZ TIENE POSICIONES VALIDAS DE 1-9, MIENTRAS QUE EL PC MANDA DE 0 A 8
+        //NUESTRA MATRIZ TIENE POSICIONES VALIDAS DE 1-10, MIENTRAS QUE EL PC MANDA DE 0 A 9
         let shotPos = this.matriz[posX+1][posY+1];
 
         if (shotPos != 0){
@@ -242,7 +251,7 @@ function Tablero(){
             return true
 
         } else {
-            console.log("el pc ha fallado el disparo :(");
+            console.log("el pc ha fallado el disparo :)");
             return false
         }
 
@@ -275,9 +284,7 @@ function Tablero(){
 
         }
         console.log("allá");
-    };
-    
-    
+    }; 
        
 }
 //let

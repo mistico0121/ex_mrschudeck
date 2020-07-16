@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Tablero from './ex web'
 import TableComponent from './tableComponent'
 
+const nombreCurrentUser = {0: "[Usuario]", 1:"[Computador]"}
 
 class BattleShip extends Component{
 	//ALL INFO ON APP, AND HOW IT CHANGES OVER TIME :DDD
@@ -19,8 +20,10 @@ class BattleShip extends Component{
 		//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
 		logs:[],
 		testing:0,
-		currentPlayer:0
+		currentActivePlayer:0
 	};
+
+
 
 	getInitialState() {
 		return {'tablero': this.props.tablero};
@@ -44,6 +47,16 @@ class BattleShip extends Component{
 			}));
 
 		}
+	}
+
+	changeCurrentActivePlayer() {
+		let newActivePlayer = (this.state.currentActivePlayer+1)%2
+
+		
+		this.setState((prevState)=>({
+			currentActivePlayer:newActivePlayer
+	
+		}));
 	}
 	
 	changeCurrentMove(nambah) {
@@ -87,7 +100,9 @@ class BattleShip extends Component{
 			currentBoatSelect: '',
 			rendirse: 0,
 			gameStarted: 0,
-			readyToStart: 0});
+			readyToStart: 0,
+			logs:[]
+		});
 		
 	}
 
@@ -118,7 +133,8 @@ class BattleShip extends Component{
 			currentBoatSelect: '',
 			rendirse: 0,
 			gameStarted: 0,
-			readyToStart: 0
+			readyToStart: 0,
+			logs:[]
 		}))
 	}
  	
@@ -134,11 +150,14 @@ class BattleShip extends Component{
 				!this.state.rendirse ?
 
 				<React.Fragment>
+						<h2>el usuario activo es {nombreCurrentUser[this.state.currentActivePlayer]}</h2>
+						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular cambio de turno</button>
 
-		
 
 						<div id = 'botes-select'>
+
 						{
+
 							//RETORNA UN NUEVO ARRAY QUE LE PASA UNA FUNCION  A CADA ELEMENTO DEL ARRAY PREVIO
 							this.state.boats.map(boat =>(
 								
@@ -182,38 +201,53 @@ class BattleShip extends Component{
 										this.state.gameStarted ?
 
 										<React.Fragment>
+											{ (this.state.currentActivePlayer==0)?
 
-											{ (this.state.currentMove != 1 &&  this.state.currentMove != 2) ?
 												<React.Fragment>
 
-													<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
-													<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
-										
-												</React.Fragment>:
-												<React.Fragment>
-													{ (this.state.currentMove == 1)?
+													{ (this.state.currentMove != 1 &&  this.state.currentMove != 2) ?
 														<React.Fragment>
-															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
-															<button className = 'btn btn-deactivated'>Shoot</button>
 
+															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
+															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+												
 														</React.Fragment>:
 														<React.Fragment>
-															<button className = 'btn btn-deactivated'>Move</button>
+															{ (this.state.currentMove == 1)?
+																<React.Fragment>
+																	<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
+																	<button className = 'btn btn-deactivated'>Shoot</button>
 
-															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+																</React.Fragment>:
+																<React.Fragment>
+																	<button className = 'btn btn-deactivated'>Move</button>
+
+																	<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+
+																</React.Fragment>
+																
+															}
+
 
 														</React.Fragment>
-														
 													}
+													<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove('-')}>Cancelar movimiento</button>
+													<button className = 'btn btn-primary' onClick = {()=>this.setBoatFromTable('-')}>Des-seleccionar bote</button>
 
-
+													<button className = 'btn btn-primary' onClick = {()=>this.surrenderGame()}>Rendirse</button>
+												</React.Fragment>:
+												<React.Fragment>
+													<button className = 'btn btn-deactivated'>Move</button>
+													<button className = 'btn btn-deactivated'>Shoot</button>
+													<button className = 'btn btn-deactivated'>Cancelar movimiento</button>
+													<button className = 'btn btn-deactivated'>Des-seleccionar bote</button>
+													<button className = 'btn btn-deactivated'>Rendirse</button>
+												
 												</React.Fragment>
+
+												//SI NO ES EL JUGADOR ACTIVO, TODOS LOS BOTONES QUEDAN DESACTIVADOS
+												
 											}
-											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove('-')}>Cancelar movimiento</button>
-											<button className = 'btn btn-primary' onClick = {()=>this.setBoatFromTable('-')}>Des-seleccionar bote</button>
-
-											<button className = 'btn btn-primary' onClick = {()=>this.surrenderGame()}>Rendirse</button>
-
 										</React.Fragment>:
 										<React.Fragment>
 											<button className='btn btn-primary' onClick = {()=>this.resetSetup()}>Reset Placement</button>
