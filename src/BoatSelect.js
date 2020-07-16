@@ -26,13 +26,20 @@ class BoatSelect extends Component{
 		}
 	onBoardUpdate() {
 		this.setState((prevState)=>({
-			tablero:this.props.tablero
+			tablero:this.props.tablero,
+			currentBoatSelect: '-'
 		}));
 	}
 	
 	changeCurrentMove(nambah) {
 		this.setState((prevState)=>({
 				currentMove: nambah
+			})
+		);
+	}
+	setBoatFromTable(boatID) {
+		this.setState((prevState)=>({
+				currentBoatSelect: boatID
 			})
 		);
 	}
@@ -84,6 +91,7 @@ class BoatSelect extends Component{
 	}
 
 	resetSetup = () =>{
+		this.props.tablero.resetMatrix();
 		this.setState((prevState)=>({
 			boats:[...prevState.readyBoats,...prevState.boats],
 			readyBoats: [],
@@ -150,7 +158,8 @@ class BoatSelect extends Component{
 									tablero = {this.props.tablero} 
 									onPlay = {this.onBoardUpdate.bind(this)}
 									currentBoat = {this.state.currentBoatSelect}
-									currentMove = {this.state.currentMove} />
+									currentMove = {this.state.currentMove}
+									setBoatFromTable ={this.setBoatFromTable.bind(this)} />
 								}
 							</div>
 							<div id='panel-and-scroll'>

@@ -10,22 +10,31 @@ class MatrixCell extends Component{
 	handleClick = () => {
 
 	let botecito = this.props.currentBoat;
+	let boatlist = ['F1', 'F2', 'F3', 'F4', 'C1', 'C2', 'C3', 'D1', 'D2', 'P1'];
 
-	if (this.props.currentMove == 1){
-	  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col)){
-        	this.props.onPlay();
-	  	}
-	} else if (this.props.currentMove == 2){
-  	if (this.props.tablero.shootArrow(botecito,this.props.row, this.props.col)){
-        	this.props.onPlay();
-  		}
-  } else if (this.props.currentMove == 0){
-	  		if (this.props.tablero.setUpBoat(botecito,this.props.row, this.props.col)){
-	  			this.props.onPlay();
-  			}
+	if (botecito == '-'|| botecito == ''){
+		if (this.props.tablero.matriz[this.props.row, this.props.col]){
+			this.props.setBoatFromTable(this.props.tablero.matriz[this.props.row][this.props.col])
+		}
+
+	}else{
+
+		if (this.props.currentMove == 1){
+		  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col)){
+	        	this.props.onPlay();
+		  	}
+		} else if (this.props.currentMove == 2){
+	  	if (this.props.tablero.shootArrow(botecito,this.props.row, this.props.col)){
+	        	this.props.onPlay();
+	  		}
+	  	} else if (this.props.currentMove == 0){
+		  		if (this.props.tablero.setUpBoat(botecito,this.props.row, this.props.col)){
+		  			this.props.onPlay();
+	  			}
 
 	  	}
-	 
+
+	 }
   }
 
 	render(){

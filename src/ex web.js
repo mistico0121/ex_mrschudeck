@@ -84,6 +84,31 @@ function Tablero(){
         return true
     }
 
+    this.resetMatrix= function(){
+        var NewMatriz = [["."]];
+
+        for (let k = 0; k<10; k++){
+            NewMatriz[0].push(String.fromCharCode(65+k));
+        }
+
+        for (let i = 0; i<10; i++){
+            let row = [i+1]
+
+            let j;
+            for (j = 0; j<10; j++){
+                //var c = new Celda(i,j);
+                row.push((0));
+                //console.log(c.x);
+
+            }
+
+            NewMatriz.push(row);
+
+        }
+        this.matriz = NewMatriz;
+
+    }
+
     //testing
     
     this.setUpBoats = function(){
@@ -208,18 +233,14 @@ function Tablero(){
     
     this.tableReady = function(){
         console.log("acá");
-        var i;
-        var s = "";
-        var k;
-        for (k = 0; k<10; k++){
+        for (let k = 0; k<10; k++){
             this.matriz[0].push(String.fromCharCode(65+k));
         }
 
-        for (i = 0; i<10; i++){
+        for (let i = 0; i<10; i++){
             let row = [i+1]
 
-            let j;
-            for (j = 0; j<10; j++){
+            for (let j = 0; j<10; j++){
                 //var c = new Celda(i,j);
                 row.push((0));
                 //console.log(c.x);

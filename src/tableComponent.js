@@ -33,6 +33,7 @@ class TableComponent extends Component{
 												row={celdaa[0]}
 												col={celdaa[1]}
 												onPlay = {this.props.onPlay}
+												setBoatFromTable = {this.props.setBoatFromTable}
 												currentBoat = {this.props.currentBoat}
 												currentMove = {this.props.currentMove}
 											/>
