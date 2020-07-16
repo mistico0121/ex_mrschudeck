@@ -1,3 +1,3 @@
-let testString = 'olakase,este es el string';
+let testString = 'Battleship IIC2513';
 
 export default testString;

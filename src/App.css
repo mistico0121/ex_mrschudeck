@@ -1,3 +1,7 @@
+body {
+  background-color: #e9d4ff;
+}
+
 .App {
   text-align: center;
   width: 100%;
@@ -6,7 +10,6 @@
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background-color: #e9d4ff;
 }
 
 .App-logo {
@@ -88,6 +91,9 @@
 }
 
 .btn-primary {
+  padding:5px;
+  margin:5px;
+
   color: #fff;
   background-color: #008080;
   border-color: #008080;
@@ -95,4 +101,54 @@
     background-color: #006969;
     border-color: #006969;
   }
+}
+.container {
+  background-color: #e9d4ff;
+  border: 1px solid #BAC0E4;
+  margin: 20px auto;
+  display:flex;
+  padding: 40px;
+}
+
+#panel-and-scroll{
+  float:left;
+  padding:20px;
+  margin:20px;
+}
+
+#panel-control{
+  background-color: #ac8f9c;
+  padding:20px;
+}
+
+.grid-container{
+  float:left;
+  display:flex;
+
+}
+
+.grid {
+  padding: 40px;
+  display: grid;
+  height:800px;
+  width:800px;
+  float:left;
+  /*0 A B C D E F G H I J*/
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  background-color: #aebffc;
+  /*grid-auto-rows: minmax(100px, auto);*/
+
+}
+
+#scroller {
+  background-color: #ffffff;
+  width: 300px;
+  height: 400px;
+  overflow: scroll;
+}
+
+div.tablePlaceholder {
+  background-color: lime;
+  width: 800px;
+  height: 800px;
 }

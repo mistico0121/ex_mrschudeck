@@ -17,8 +17,7 @@ function Player(){
     // ESTO DETERMINA SI UN USUARIO PIERDE
     
     this.boatIndex = {'F1': 0, 'F2':1, 'F3':2, 'F4':3,'C1':4, 'C2':5, 'C3': 6, 'D1':7, 'D2':8, 'D3':9}
-    this.boatList = [this.boteF1, this.boteF2,this.boteF3,this.boteF4, this.boteC1, this.boteC2 ,\
-        this.boteC3, this.boteD1, this.boteD2, this.boteP1];
+    this.boatList = [this.boteF1, this.boteF2,this.boteF3,this.boteF4, this.boteC1, this.boteC2, this.boteC3, this.boteD1, this.boteD2, this.boteP1];
 }
 
 function Boat(id){

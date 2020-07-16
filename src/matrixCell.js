@@ -10,13 +10,13 @@ class matrixCell extends Component{
 	handleClick() {
 
 		let botecito = this.props.tablero.player1.boatList[this.props.tablero.boatIndex[this.props.currentBoat]]
-		if (this.props.currentAction == 'move'){
+		if (this.props.currentMove == 0){
 	  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col))
         this.props.onPlay();
-	  } else if (this.props.currentAction == 'shoot'){
+	  } else if (this.props.currentMove == 0){
 	  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col))
         this.props.onPlay();
-	  } else if (this.props.currentAction == 'placing'){
+	  } else if (this.props.currentMove == 0){
 	  	if (this.props.tablero.setUpBoat(botecito,this.props.row, this.props.col)){
 	  		this.props.onPlay();
 	  	}
@@ -24,12 +24,10 @@ class matrixCell extends Component{
 	  }
   }
 
-
-	//Props porque requiere que le pasen el board y, bueno, su numero de celda y datos
 	render(){
 		return <div className = 'btn btn-primary' onClick={this.handleClick}>
 						{this.props.tablero.matriz[this.props.row][this.props.col]}
-					</div>
+				</div>
 	}
 
 }
