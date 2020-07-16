@@ -17,9 +17,13 @@ const numeroAlumno = '16638530'
 const authAxios = axios.create({
 	baseURL: apiUrl,
 	headers:{
-		'Authorization': `Bearer ${accessToken}`,
 		'Content-Type': 'application/json'
+	},
+	body:{
+	    "email": {email},
+	    "studentNumber": {numeroAlumno}
 	}
+
 })
 
 async function postToApi(baseURL, mode, data){
@@ -48,7 +52,7 @@ function App() {
 		try{
 			console.log('estoy acá owo')
 
-			const result = await authAxios.post('/games');
+			const result = await authAxios.put('/auth');
 			testStringApp = result;
 		} catch (err){
 			console.log('o quizas estoy aca')

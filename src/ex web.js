@@ -89,11 +89,11 @@ function Tablero(){
             NewMatriz[0].push(String.fromCharCode(65+k));
         }
 
-        for (let i = 0; i<10; i++){
+        for (let i = 0; i<11; i++){
             let row = [i+1]
 
             let j;
-            for (j = 0; j<10; j++){
+            for (j = 0; j<11; j++){
                 //var c = new Celda(i,j);
                 row.push((0));
                 //console.log(c.x);
@@ -222,24 +222,49 @@ function Tablero(){
         }
         
     }
+
+    this.enemyShootsToCell = function(posX,posY){
+
+        //SE ASUME QUE PC NO MANDA POSICIONES DE DISPARO INVALIDAS
+        //NUESTRA MATRIZ TIENE POSICIONES VALIDAS DE 1-9, MIENTRAS QUE EL PC MANDA DE 0 A 8
+        let shotPos = this.matriz[posX+1][posY+1];
+
+        if (shotPos != 0){
+            console.log("EL PC LE HA DISPARADO A UNO DE TUS BARCOS D:");
+            let shotId = this.globalBoatDict[shotPos].id;
+            let shotBoatIndex = this.player1.boatIndex[shotId];
+            console.log(`el bote era ${shotId}`);
+            this.globalBoatDict[shotPos].status = 0;
+            console.log(`el status del bote  es ${this.player1.boatList[shotBoatIndex].status}`);
+
+            this.matriz[posX][posY] = 'Z';
+            this.player1.boatCount--;
+            return true
+
+        } else {
+            console.log("el pc ha fallado el disparo :(");
+            return false
+        }
+
+    }
     
     this.printMatrix = function() {
         let n;
-        for (n = 0; n<10; n++){
+        for (n = 0; n<11; n++){
             console.log(`${this.matriz[n]}`);
         }
     };
     
     this.tableReady = function(){
         console.log("acá");
-        for (let k = 0; k<10; k++){
+        for (let k = 0; k<11; k++){
             this.matriz[0].push(String.fromCharCode(65+k));
         }
 
-        for (let i = 0; i<10; i++){
+        for (let i = 0; i<11; i++){
             let row = [i+1]
 
-            for (let j = 0; j<10; j++){
+            for (let j = 0; j<11; j++){
                 //var c = new Celda(i,j);
                 row.push((0));
                 //console.log(c.x);
