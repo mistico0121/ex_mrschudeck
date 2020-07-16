@@ -102,6 +102,20 @@ body {
     border-color: #006969;
   }
 }
+
+.btn-tablero {
+  padding:5px;
+  border:1px solid;;
+
+  color: #ecf542;
+  background-color: #011122;
+  border-color: #ecf542;
+  &:hover {
+    background-color: #415162;
+    border-color: #ecf542;
+  }
+}
+
 .container {
   background-color: #e9d4ff;
   border: 1px solid #BAC0E4;

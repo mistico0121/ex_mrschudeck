@@ -71,17 +71,24 @@ function Tablero(){
     this.matriz = [["."]];
     this.player1 = new Player();
     this.globalBoatDict = {};
+    this.placedBoats = [];
     //this.player2 = new Player();
     
     this.setUpBoat = function(boatID, posX, posY){
 
-        let boat = this.player1.boatList[this.player1.boatIndex[boatID]] 
+        if (this.matriz[posX][posY] != 0 ){
+            return false
+        } else{
 
-        boat.currentPositionX = posX;
-        boat.currentPositionY = posY;
-        this.matriz[posX][posY] = boat.id;
-        this.globalBoatDict[boat.id] = boat;
-        return true
+            let boat = this.player1.boatList[this.player1.boatIndex[boatID]] 
+
+            boat.currentPositionX = posX;
+            boat.currentPositionY = posY;
+            this.matriz[posX][posY] = boat.id;
+            this.globalBoatDict[boat.id] = boat;
+            this.placedBoats.push(boatID);
+            return true
+        }
     }
 
     this.resetMatrix= function(){
@@ -106,6 +113,7 @@ function Tablero(){
 
         }
         this.matriz = NewMatriz;
+        this.placedBoats = [];
 
     }
 

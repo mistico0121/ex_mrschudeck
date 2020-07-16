@@ -77,15 +77,16 @@ class BoatSelect extends Component{
 	setBoat = (boat) => {
 		var index = this.state.boats.indexOf(boat);
 		var boat2 = this.state.boats.splice(index,1)
+		
 		this.setState((prevState)=>({
 			currentBoatSelect: boat2,
 			readyBoats: [...prevState.readyBoats, boat2],
 		
 		}),()=>{
 			//current value is updated here
-			if (this.state.readyBoats.length == 10){
+			if (this.props.tablero.placedBoats.length == 9){
 				//QUE APAREZCAN BOTONES MOVE Y SHOOT
-				this.setState({readyToStart: 1})
+				this.setState((prevState)=>({readyToStart: 1}))
 			}
 		});
 	}
