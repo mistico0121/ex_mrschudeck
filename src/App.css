@@ -133,6 +133,7 @@ body {
 #panel-control{
   background-color: #ac8f9c;
   padding:20px;
+  width: 350px;
 }
 
 .grid-container{
@@ -156,9 +157,11 @@ body {
 
 #scroller {
   background-color: #ffffff;
-  width: 300px;
+  width: 350px;
   height: 400px;
   overflow: scroll;
+  padding:20px;
+
 
 }
 
