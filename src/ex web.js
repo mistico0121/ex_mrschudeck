@@ -134,12 +134,15 @@ function Tablero(){
                 boat.currentPositionX = posX;
                 boat.currentPositionY = posY;
                 this.matriz[posX][posY] = boat.id;
+                return true
 
             } else {
                 console.log("casilla ocupada");
+                return false
             }
         } else {
             console.log("movimiento no valido :(")
+            return false
         }
         
     
@@ -183,12 +186,15 @@ function Tablero(){
 
                 this.matriz[posX][posY] = 'Z';
                 this.player1.boatCount--;
+                return true
 
             } else {
                 console.log("haz fallado tu disparo :(");
+                return false
             }
         } else {
             console.log("disparo no valido :(")
+            return false
         }
         
     }

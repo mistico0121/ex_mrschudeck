@@ -25,8 +25,9 @@ class BoatSelect extends Component{
 		return {'tablero': this.props.tablero};
 		}
 	onBoardUpdate() {
-		this.setState({
-			testing:1});
+		this.setState((prevState)=>({
+			tablero:this.props.tablero
+		}));
 	}
 	
 	changeCurrentMove(nambah) {
@@ -51,10 +52,9 @@ class BoatSelect extends Component{
 	}
 	
 	
-
-	newGame(){
+	//TODO: CREATE NEW TABLERO OR REVERSE EVERYTHING TO THE INITIAL STATE
+	newGame = ()=>{
 		let tablero6 = new Tablero();
-		tablero6.tableReady();
 		this.setState({
 			tablero: tablero6,
 			boats:['F1', 'F2', 'F3', 'F4', 'C1', 'C2', 'C3', 'D1', 'D2', 'P1'],

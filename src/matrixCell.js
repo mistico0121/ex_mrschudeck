@@ -9,7 +9,7 @@ class MatrixCell extends Component{
 
 	handleClick = () => {
 
-	let botecito = this.props.currentBoat.toString();
+	let botecito = this.props.currentBoat;
 
 	if (this.props.currentMove == 1){
 	  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col)){
