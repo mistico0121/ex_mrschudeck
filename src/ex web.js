@@ -16,7 +16,7 @@ function Player(){
     this.boatCount = 10;
     // ESTO DETERMINA SI UN USUARIO PIERDE
     
-    this.boatIndex = {'F1': 0, 'F2':1, 'F3':2, 'F4':3,'C1':4, 'C2':5, 'C3': 6, 'D1':7, 'D2':8, 'D3':9}
+    this.boatIndex = {'F1': 0, 'F2':1, 'F3':2, 'F4':3,'C1':4, 'C2':5, 'C3': 6, 'D1':7, 'D2':8, 'P1':9}
     this.boatList = [this.boteF1, this.boteF2,this.boteF3,this.boteF4, this.boteC1, this.boteC2, this.boteC3, this.boteD1, this.boteD2, this.boteP1];
 }
 
@@ -73,23 +73,34 @@ function Tablero(){
     this.globalBoatDict = {};
     //this.player2 = new Player();
     
-    this.setUpBoat = function(boat, posX, posY){
+    this.setUpBoat = function(boatID, posX, posY){
+
+        let boat = this.player1.boatList[this.player1.boatIndex[boatID]] 
+
         boat.currentPositionX = posX;
         boat.currentPositionY = posY;
         this.matriz[posX][posY] = boat.id;
         this.globalBoatDict[boat.id] = boat;
+        return true
     }
+
+    //testing
     
     this.setUpBoats = function(){
         let p;
-        
-        for (p = 0; p<3; p++){
-            
-            this.setUpBoat(this.player1.boatList[p], p+1, p+1);
-        }
+
+        this.setUpBoat('F1', 1, 1);
+
+        this.setUpBoat('F2', 2, 3);
+
+        this.setUpBoat('D2', 4, 7);
+
+        this.setUpBoat('D1', 1, 5);
     }
     
-    this.moveBoat = function(boat, posX, posY){
+    this.moveBoat = function(boatID, posX, posY){
+        let boat = this.player1.boatList[this.player1.boatIndex[boatID]] 
+
         console.log(`mover el bote ${boat.id} a posicion (${posX}, ${posY} )`)
         console.log(`El bote ${boat.id} se encuentra actualmente en (${boat.currentPositionX}, ${boat.currentPositionY} )`)
 
@@ -134,7 +145,10 @@ function Tablero(){
     
     }
     
-    this.shootArrow = function(boat, posX, posY){
+    this.shootArrow = function(boatID, posX, posY){
+        let boat = this.player1.boatList[this.player1.boatIndex[boatID]] 
+
+
         console.log(`el bote ${boat.id} que se encuenta en  posicion (${boat.currentPositionX}, ${String.fromCharCode(64+boat.currentPositionY)} )`);
         console.log(`Intenta disparar a posición (${posX}, ${String.fromCharCode(64+posY)})`);
         let valid = 0;

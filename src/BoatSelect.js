@@ -149,7 +149,8 @@ class BoatSelect extends Component{
 								<TableComponent 
 									tablero = {this.props.tablero} 
 									onPlay = {this.onBoardUpdate.bind(this)}
-									currentBoat = {this.state.currentBoat} />
+									currentBoat = {this.state.currentBoatSelect}
+									currentMove = {this.state.currentMove} />
 								}
 							</div>
 							<div id='panel-and-scroll'>
