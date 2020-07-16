@@ -3,7 +3,7 @@ import Tablero from './ex web'
 import TableComponent from './tableComponent'
 
 
-class BoatSelect extends Component{
+class BattleShip extends Component{
 	//ALL INFO ON APP, AND HOW IT CHANGES OVER TIME :DDD
 	state = {
 		boats: ['F1', 'F2', 'F3', 'F4', 'C1', 'C2', 'C3', 'D1', 'D2', 'P1'],
@@ -168,8 +168,30 @@ class BoatSelect extends Component{
 										this.state.gameStarted ?
 
 										<React.Fragment>
-											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
-											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+
+											{ (this.state.currentMove != 1 &&  this.state.currentMove != 2) ?
+												<React.Fragment>
+
+													<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
+													<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+										
+												</React.Fragment>:
+												<React.Fragment>
+													{ (this.state.currentMove == 1)?
+														<React.Fragment>
+															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
+
+														</React.Fragment>:
+														<React.Fragment>
+															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+
+														</React.Fragment>
+														
+													}
+
+
+												</React.Fragment>
+											}
 											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove('-')}>Cancelar movimiento</button>
 											<button className = 'btn btn-primary' onClick = {()=>this.setBoatFromTable('-')}>Des-seleccionar bote</button>
 
@@ -191,7 +213,6 @@ class BoatSelect extends Component{
 										//RETORNA UN NUEVO ARRAY QUE LE PASA UNA FUNCION  A CADA ELEMENTO DEL ARRAY PREVIO
 										this.state.logs.map(log =>(
 											<React.Fragment>
-
 												<p>{log}</p>
 											</React.Fragment>
 										))
@@ -217,4 +238,4 @@ class BoatSelect extends Component{
 
 }
 
-export default BoatSelect;
+export default BattleShip;

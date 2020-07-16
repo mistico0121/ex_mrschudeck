@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import BoatSelect from './BoatSelect';
+import BattleShip from './BattleShip';
 import './App.css';
 import testString from './testString';
 import tableComponent from './tableComponent';
@@ -12,17 +12,12 @@ function App() {
 	table6.tableReady()
 	table6.printMatrix();
 
-
 	let testStringApp = testString;
-
-	console.log(testString);
-
-
 
   return (
     <div className="App">
 			<h1>{testStringApp}</h1>
-			<BoatSelect tablero={table6}/>
+			<BattleShip tablero={table6}/>
       
 		</div>
   );
