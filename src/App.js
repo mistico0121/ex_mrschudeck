@@ -22,7 +22,6 @@ function App() {
   return (
     <div className="App">
 			<h1>{testStringApp}</h1>
-		    <h1>veamos esto {table6.matriz[0][1]}</h1>
 			<BoatSelect tablero={table6}/>
       
 		</div>

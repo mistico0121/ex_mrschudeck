@@ -13,11 +13,11 @@ class TableComponent extends Component{
 			}
 		}
 		var cell = new MatrixCell({
-											tablero:this.props.tablero,
-											row:1,
-											col:2,
-											//onPlay: {this.props.onPlay}
-										})
+					tablero:this.props.tablero,
+					row:1,
+					col:2,
+					//onPlay: {this.props.onPlay}
+				})
 										
 
 		return (
@@ -25,21 +25,21 @@ class TableComponent extends Component{
 				
 				<div className='grid'>
 							<React.Fragment>
-										{
-										celdas.map((celdaa)=>
-											
-											<MatrixCell
-												tablero={this.props.tablero}
-												row={celdaa[0]}
-												col={celdaa[1]}
-												onPlay = {this.props.onPlay}
-												setBoatFromTable = {this.props.setBoatFromTable}
-												currentBoat = {this.props.currentBoat}
-												currentMove = {this.props.currentMove}
-											/>
-										)
+									{
+									celdas.map((celdaa)=>
+										
+										<MatrixCell
+											tablero={this.props.tablero}
+											row={celdaa[0]}
+											col={celdaa[1]}
+											onPlay = {this.props.onPlay}
+											setBoatFromTable = {this.props.setBoatFromTable}
+											currentBoat = {this.props.currentBoat}
+											currentMove = {this.props.currentMove}
+										/>
+									)
 
-										}
+									}
 								
 							</React.Fragment>
 						

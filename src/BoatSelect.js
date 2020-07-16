@@ -27,7 +27,8 @@ class BoatSelect extends Component{
 	onBoardUpdate() {
 		this.setState((prevState)=>({
 			tablero:this.props.tablero,
-			currentBoatSelect: '-'
+			currentBoatSelect: '-',
+			currentMove:0
 		}));
 	}
 	
@@ -53,7 +54,8 @@ class BoatSelect extends Component{
 
 	startGame() {
 		this.setState((prevState)=>({
-				gameStarted: 1
+				gameStarted: 1,
+				currentMove: '-'
 			})
 		);
 	}
@@ -61,6 +63,7 @@ class BoatSelect extends Component{
 	
 	//TODO: CREATE NEW TABLERO OR REVERSE EVERYTHING TO THE INITIAL STATE
 	newGame = ()=>{
+		this.props.tablero.resetMatrix();
 		let tablero6 = new Tablero();
 		this.setState({
 			tablero: tablero6,
@@ -77,10 +80,11 @@ class BoatSelect extends Component{
 	setBoat = (boat) => {
 		var index = this.state.boats.indexOf(boat);
 		var boat2 = this.state.boats.splice(index,1)
-		
+
 		this.setState((prevState)=>({
 			currentBoatSelect: boat2,
 			readyBoats: [...prevState.readyBoats, boat2],
+			currentMove: 0
 		
 		}),()=>{
 			//current value is updated here
@@ -111,22 +115,13 @@ class BoatSelect extends Component{
 
 		return (
 			<div id = 'table'>
-			<h1>veamos aquello {this.props.tablero.matriz[0][3]}</h1>
-
 
 			{
 				!this.state.rendirse ?
 
 				<React.Fragment>
 
-					
-						<div id = 'consola'>
-							<h2>Bote seleccionado {this.state.currentBoatSelect}</h2>
-							<h2>Botes puestos {this.state.readyBoats}</h2>
-							<h2>testing es{this.state.testing}</h2>
-							<h2>current move es{this.state.currentMove}</h2>
-
-						</div>
+		
 
 						<div id = 'botes-select'>
 						{
@@ -165,14 +160,19 @@ class BoatSelect extends Component{
 							</div>
 							<div id='panel-and-scroll'>
 								<div id='panel-control'>
-								
-									
+								<h2>Bote seleccionado: {this.state.currentBoatSelect}</h2>
+								<h2>testing es {this.state.testing}</h2>
+								<h2>current move es {this.state.currentMove}</h2>
+										
 									{
 										this.state.gameStarted ?
 
 										<React.Fragment>
 											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
 											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
+											<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove('-')}>Cancelar movimiento</button>
+											<button className = 'btn btn-primary' onClick = {()=>this.setBoatFromTable('-')}>Des-seleccionar bote</button>
+
 											<button className = 'btn btn-primary' onClick = {()=>this.surrenderGame()}>Rendirse</button>
 
 										</React.Fragment>:
