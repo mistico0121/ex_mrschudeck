@@ -32,7 +32,7 @@ function App (){
 					"Authorization": `Bearer ${accessToken}`,
 					"Content-Type": "application/json"
 				}
-			}).then(console.log("awa owo")).then(result=>console.log(result.json()));
+			}).then(result=>console.log(result.json()));
 
 		};
 		fetchData();
@@ -42,8 +42,6 @@ function App (){
 	return (
     	<div className="App">
 			<h1>{testStringApp}</h1>
-			<h1>{result}</h1>
-			<h1>holi test</h1>
 			<BattleShip tablero = {tablero6}
 						accessToken = {accessToken}/>
 	      	

@@ -26,20 +26,18 @@ class MatrixCell extends Component{
 				  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col)){
 				  		//F ;___;
 				  		//[Usuario]: Mover - C1 - Sur - 3 
-				  		stringToShow = `${botecito} SE MUEVE A ${this.props.row} ${this.props.col}`
-			        	this.props.onPlay(stringToShow);
+			        	this.props.onPlay(1, botecito, 'MOVE',this.props.row, this.props.col);
 				  	}
 				} else if (this.props.currentMove == 2){
 			  	if (this.props.tablero.shootArrow(botecito,this.props.row, this.props.col)){
 
 			  			//[Usuario]: Disparo - D1 - D6
-				  		stringToShow = `Disparo - ${botecito} - ${String.fromCharCode(64+this.props.col)} ${this.props.row}`
 
-			        	this.props.onPlay(stringToShow);
+			        	this.props.onPlay(2, botecito, 'FIRE', this.props.row, this.props.col);
 			  		}
 			  	} else if (this.props.currentMove == 0){
 				  		if (this.props.tablero.setUpBoat(botecito,this.props.row, this.props.col)){
-				  			this.props.onPlay('666');
+				  			this.props.onPlay('666',0,0,0,0);
 			  			}
 
 			  	}

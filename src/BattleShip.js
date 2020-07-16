@@ -3,6 +3,9 @@ import Tablero from './ex web'
 import TableComponent from './tableComponent'
 
 const nombreCurrentUser = {0: "[Usuario]", 1:"[Computador]"}
+const nombreAccion = {0: "Insertando", 1:"Mover", 2:"Disparar"}
+let dictAccion = {1:'MOVE', 2:'FIRE'}
+
 
 class BattleShip extends Component{
 	//ALL INFO ON APP, AND HOW IT CHANGES OVER TIME :DDD
@@ -24,9 +27,11 @@ class BattleShip extends Component{
 			//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
 			logs:[],
 			testing:0,
-			currentActivePlayer:0
+			currentActivePlayer:0,
 		};
 	}
+
+	//Setea el gameId
 	componentDidMount(){
 		fetch("https://battleship.iic2513.phobos.cl/games",{
 				method:'POST',
@@ -38,23 +43,76 @@ class BattleShip extends Component{
 			}).then((response) => response.json())
 				.then(data=>this.setState({gameId:data.gameId}));
 					//}).then(gameId => this.setState({gameId:gameId.json()}));
-
-
 	}
 
 	getInitialState() {
 		return {'tablero': this.props.tablero};
 		}
 
-	cellGetsShot = (posX,posY)=>{
+	cellGetsShot = (enemyBoat, posX, posY)=>{
 		//SE ASUME QUE INFO RECIBIDA DESDE API NO SERÁ ERRÓNEA
+		let stringsToShow= [`${nombreCurrentUser[this.state.currentActivePlayer]}: Disparo - ${enemyBoat} - ${String.fromCharCode(64+posY)}${posX}`]
+
+
+		if (this.props.tablero.enemyShootsToCell(posX,posY)){
+			stringsToShow.push(`${nombreCurrentUser[this.state.currentActivePlayer]}: Hunde - ${this.props.tablero.lastDead} - ${String.fromCharCode(64+posY)}${posX}`)
+		}
+		this.setState((prevState)=>({
+				tablero:this.props.tablero,
+				currentBoatSelect: '-',
+				currentMove:0,
+				logs: [...prevState.logs,stringsToShow],
+			}));
 
 
 	}
 
-	onBoardUpdate(stringReceived) {
+	dataHandler= (data) =>{
+		console.log("data es",data);
+		if (data.action.type == 'FIRE'){
+			this.cellGetsShot(data.action.ship, data.action.row, data.action.column);
+		}
+	} 
+
+
+	onBoardUpdate(code,botecito, action ,row, col) {
 		//EL SETEO DE BOTES NO SE MARCA EN LOG, PUES VIENEN CON EL CÓDIGO SATÁNICO
-		if (stringReceived=='666'){
+		//ACÁ SE DEBIERA HACER LA MAGIA CON EL SERVER
+
+		let data = {};
+		let stringToShow;
+
+		if (code==1){
+			//MOVER, ARMAMOS STRING BITACORA Y DATA
+	 		stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${action} - ${botecito} - ${this.props.tablero.direction} - ${this.props.tablero.dif1}`
+
+			data = {
+				"action":{
+					"type": dictAccion[this.state.currentMove],
+					"ship": botecito,
+					"direction": this.props.tablero.direction,
+					"quantity": this.props.tablero.dif1
+
+				}
+			}
+		}else if (code==2){
+			//DISPARO, ARMAMOS STRING BITACORA Y DATA
+	 		stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${action} - ${botecito} - ${String.fromCharCode(64+col)}${row}`
+
+			data = {
+				"action":{
+					"type": dictAccion[this.state.currentMove],
+					"ship": botecito,
+					"row": row,
+					"column": col
+
+				}
+			}
+
+		}
+
+		//SOLO ACTUALIZA LOG SI CODE ES 666
+		if (code =='666'){
 			this.setState((prevState)=>({
 				tablero:this.props.tablero,
 				currentBoatSelect: '-',
@@ -64,12 +122,31 @@ class BattleShip extends Component{
 			this.setState((prevState)=>({
 				tablero:this.props.tablero,
 				currentBoatSelect: '-',
-				currentMove:0,
-				logs: [...prevState.logs,stringReceived],
+				currentMove:'-',
+				logs: [...prevState.logs,stringToShow],
+				currentActivePlayer:1
+
 
 			}));
 
 		}
+
+		console.log(data)
+
+		//SE MANDA AL SERVER Y SE ESPERA RESPUESTA
+		if (code!='666'){
+			fetch(`https://battleship.iic2513.phobos.cl/games/${this.state.gameId}/action`,{
+					method:'POST',
+					body:JSON.stringify(data),
+					headers:{
+						"Authorization": `Bearer ${this.props.accessToken}`,
+						"Content-Type": "application/json"
+					}
+				}).then((response) => response.json())
+					.then((dataa)=> this.dataHandler(dataa));
+						//}).then(gameId => this.setState({gameId:gameId.json()}));
+			}
+		//SE ACTUALIZA TABLERO
 	}
 
 	changeCurrentActivePlayer() {
@@ -140,7 +217,7 @@ class BattleShip extends Component{
 		
 		}),()=>{
 			//current value is updated here
-			if (this.props.tablero.placedBoats.length == 9){
+			if (this.props.tablero.placedBoats.length == 3){
 				//QUE APAREZCAN BOTONES MOVE Y SHOOT
 				this.setState((prevState)=>({readyToStart: 1}))
 			}
@@ -177,7 +254,7 @@ class BattleShip extends Component{
 						<h2>el gameId es {this.state.gameId}</h2>
 
 						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular cambio de turno</button>
-						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular Disparo PC en casilla 4 4</button>
+						<button className = 'btn btn-primary' onClick = {()=>this.cellGetsShot('F1',4,4)}>Simular Disparo PC en casilla E5</button>
 
 
 						<div id = 'botes-select'>
@@ -221,7 +298,7 @@ class BattleShip extends Component{
 								<div id='panel-control'>
 								<h2>Bote seleccionado: {this.state.currentBoatSelect}</h2>
 								<h2>testing es {this.state.testing}</h2>
-								<h2>current move es {this.state.currentMove}</h2>
+								<h2>Accion seleccionada: {nombreAccion[this.state.currentMove]}</h2>
 										
 									{
 										this.state.gameStarted ?

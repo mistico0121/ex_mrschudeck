@@ -64,6 +64,8 @@ function Tablero(){
     this.globalBoatDict = {};
     this.placedBoats = [];
     this.importantMessage = "";
+    this.direction = '';
+    this.dif1 = 0;
     //this.player2 = new Player();
 
     this.setUpBoat = function(boatID, posX, posY){
@@ -136,6 +138,12 @@ function Tablero(){
         let movePos = this.matriz[posX][posY];
         if (posX == boat.currentPositionX && posY !=boat.currentPositionY){
             let dif = Math.abs(boat.currentPositionY - posY);
+            this.dif1 = dif;
+            if (posY>boat.currentPositionY){
+                this.direction = 'EAST'
+            }else{
+                this.direction = 'WEST'
+            }
             
             if (dif > boat.moveRange){
                 valid = 0;
@@ -144,7 +152,14 @@ function Tablero(){
             }
         } else if (posY ==boat.currentPositionY && posX !=boat.currentPositionX){
             let dif = Math.abs(boat.currentPositionX - posX);
-            
+            this.dif1 = dif;
+
+            if (posX>boat.currentPositionX){
+                this.direction = 'SOUTH'
+            }else{
+                this.direction = 'NORTH'
+            }
+
             if (dif > boat.moveRange){
                 valid = 0;
             } else {
