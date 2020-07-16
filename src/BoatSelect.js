@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Tablero from './ex web'
+import TableComponent from './tableComponent'
 
 
 class BoatSelect extends Component{
@@ -13,12 +14,17 @@ class BoatSelect extends Component{
 		rendirse: 0,
 		gameStarted:0,
 		currentMove: 0,
+		tablero: this.props.tablero,
 		//ACÁ GUARDAREMOS LOS LOGS QUE GENERE EL PROGRAMA DURANTE EJECUCION
-		logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
+		//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
+		logs:[]
 	};
 
 	getInitialState() {
-		return {'tablero': this.state.tablero};
+		return {'tablero': this.props.tablero};
+		}
+	onBoardUpdate = () => {
+		this.setState({"tablero": this.props.tablero});
 		}
 	
 	changeCurrentMove(nambah) {
@@ -41,15 +47,14 @@ class BoatSelect extends Component{
 			})
 		);
 	}
-
-	onBoardUpdate() {
-		this.setState({"tablero": this.state.tablero});
-		}
+	
+	
 
 	newGame(){
 		let tablero6 = new Tablero();
 		tablero6.tableReady();
 		this.setState({tablero: tablero6});
+		
 	}
 
 	setBoat = (boat) => {
@@ -80,11 +85,15 @@ class BoatSelect extends Component{
 		}))
 	}
  	
+
 	//WHAT SHOULD THE USER SEE WHEN THE STATE CHANGES WOW
 	render(){
+		
 
 		return (
 			<div id = 'table'>
+			<h1>veamos aquello {this.props.tablero.matriz[0][3]}</h1>
+
 
 			{
 				!this.state.rendirse ?
@@ -127,9 +136,11 @@ class BoatSelect extends Component{
 						<div className = 'container'>
 							
 							<div className = 'grid-container'>
-								<div className = 'grid'>
-								aaaa
-								</div>
+								{
+								<TableComponent 
+									tablero = {this.props.tablero} 
+									onPlay = {this.onBoardUpdate} />
+								}
 							</div>
 							<div id='panel-and-scroll'>
 								<div id='panel-control'>
@@ -171,8 +182,8 @@ class BoatSelect extends Component{
 					
 				</React.Fragment>:
 				<React.Fragment>
-				<h1>USTED SE HA RENDIDO</h1>
-				<button className = 'btn btn-primary' onClick = {()=>this.resetSetup()}>Nueva partida</button>
+					<h1>USTED SE HA RENDIDO</h1>
+					<button className = 'btn btn-primary' onClick = {()=>this.resetSetup()}>Nueva partida</button>
 
 				</React.Fragment>
 			}

@@ -3,14 +3,16 @@ import React, {Component} from 'react';
 
 //Basado en componente de
 //https://www.codementor.io/@codementorteam/react-beginner-tutorial-building-a-board-game-from-scratch-ajjkqr62x
-class matrixCell extends Component{
+class MatrixCell extends Component{
 
 	//Si current action es X, hace algo, si es Y, hace otra cosa
 
-	handleClick() {
+	handleClick = ()=> {
 
-		let botecito = this.props.tablero.player1.boatList[this.props.tablero.boatIndex[this.props.currentBoat]]
-		if (this.props.currentMove == 0){
+	
+	let botecito = this.props.tablero.player1.boatList[this.props.tablero.player1.boatIndex[this.props.currentBoat]]
+
+	if (this.props.currentMove == 0){
 	  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col))
         this.props.onPlay();
 	  } else if (this.props.currentMove == 0){
@@ -22,14 +24,19 @@ class matrixCell extends Component{
 	  	}
 
 	  }
+	 
   }
 
 	render(){
-		return <div className = 'btn btn-primary' onClick={this.handleClick}>
+		return (
+			
+				<div className = 'btn btn-primary' onClick={this.handleClick}>
 						{this.props.tablero.matriz[this.props.row][this.props.col]}
 				</div>
+			
+		)
 	}
 
 }
 
-export default matrixCell
+export default MatrixCell

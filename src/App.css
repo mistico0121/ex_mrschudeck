@@ -134,7 +134,7 @@ body {
   width:800px;
   float:left;
   /*0 A B C D E F G H I J*/
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
   background-color: #aebffc;
   /*grid-auto-rows: minmax(100px, auto);*/
 
