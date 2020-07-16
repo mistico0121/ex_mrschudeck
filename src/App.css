@@ -80,10 +80,10 @@ body {
   border-radius: 0.25rem;
 }
 
-.btn-danger {
+.btn-deactivated {
   color: #fff;
-  background-color: #8A1414;
-  border-color: #8A1414;
+  background-color: #999999;
+  border-color: #999999;
   &:hover {
     background-color: #9A2424;
     border-color: #9A2424;
@@ -159,6 +159,7 @@ body {
   width: 300px;
   height: 400px;
   overflow: scroll;
+
 }
 
 div.tablePlaceholder {

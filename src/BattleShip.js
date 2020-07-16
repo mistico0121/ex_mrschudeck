@@ -18,18 +18,32 @@ class BattleShip extends Component{
 		//ACÁ GUARDAREMOS LOS LOGS QUE GENERE EL PROGRAMA DURANTE EJECUCION
 		//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
 		logs:[],
-		testing:0
+		testing:0,
+		currentPlayer:0
 	};
 
 	getInitialState() {
 		return {'tablero': this.props.tablero};
 		}
-	onBoardUpdate() {
-		this.setState((prevState)=>({
-			tablero:this.props.tablero,
-			currentBoatSelect: '-',
-			currentMove:0
-		}));
+
+
+	onBoardUpdate(stringReceived) {
+		if (stringReceived=='666'){
+			this.setState((prevState)=>({
+				tablero:this.props.tablero,
+				currentBoatSelect: '-',
+				currentMove:0
+			}));
+		} else {
+			this.setState((prevState)=>({
+				tablero:this.props.tablero,
+				currentBoatSelect: '-',
+				currentMove:0,
+				logs: [...prevState.logs,stringReceived],
+
+			}));
+
+		}
 	}
 	
 	changeCurrentMove(nambah) {
@@ -180,9 +194,12 @@ class BattleShip extends Component{
 													{ (this.state.currentMove == 1)?
 														<React.Fragment>
 															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(1)}>Move</button>
+															<button className = 'btn btn-deactivated'>Shoot</button>
 
 														</React.Fragment>:
 														<React.Fragment>
+															<button className = 'btn btn-deactivated'>Move</button>
+
 															<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentMove(2)}>Shoot</button>
 
 														</React.Fragment>

@@ -13,6 +13,7 @@ class MatrixCell extends Component{
 
 			let botecito = this.props.currentBoat;
 			let boatlist = ['F1', 'F2', 'F3', 'F4', 'C1', 'C2', 'C3', 'D1', 'D2', 'P1'];
+			let stringToShow = ''
 
 			if (botecito == '-'|| botecito == ''){
 				if (this.props.tablero.matriz[this.props.row, this.props.col]){
@@ -23,15 +24,22 @@ class MatrixCell extends Component{
 
 				if (this.props.currentMove == 1){
 				  	if (this.props.tablero.moveBoat(botecito,this.props.row, this.props.col)){
-			        	this.props.onPlay();
+				  		//F ;___;
+				  		//[Usuario]: Mover - C1 - Sur - 3 
+				  		stringToShow = `${botecito} SE MUEVE A ${this.props.row} ${this.props.col}`
+			        	this.props.onPlay(stringToShow);
 				  	}
 				} else if (this.props.currentMove == 2){
 			  	if (this.props.tablero.shootArrow(botecito,this.props.row, this.props.col)){
-			        	this.props.onPlay();
+
+			  			//[Usuario]: Disparo - D1 - D6
+				  		stringToShow = `Disparo - ${botecito} - ${String.fromCharCode(64+this.props.col)} ${this.props.row}`
+
+			        	this.props.onPlay(stringToShow);
 			  		}
 			  	} else if (this.props.currentMove == 0){
 				  		if (this.props.tablero.setUpBoat(botecito,this.props.row, this.props.col)){
-				  			this.props.onPlay();
+				  			this.props.onPlay('666');
 			  			}
 
 			  	}
