@@ -11,14 +11,7 @@ class TableComponent extends Component{
 				var celdita = [i,j];
 				celdas.push(celdita);
 			}
-		}
-		var cell = new MatrixCell({
-					tablero:this.props.tablero,
-					row:1,
-					col:2,
-					//onPlay: {this.props.onPlay}
-				})
-										
+		}								
 
 		return (
 			
@@ -32,6 +25,7 @@ class TableComponent extends Component{
 											tablero={this.props.tablero}
 											row={celdaa[0]}
 											col={celdaa[1]}
+											key={celdaa}
 											onPlay = {this.props.onPlay}
 											setBoatFromTable = {this.props.setBoatFromTable}
 											currentBoat = {this.props.currentBoat}

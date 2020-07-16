@@ -57,15 +57,6 @@ function boatP(number){
     this.shotRange = 5;
 }
 
-function Celda(x,y){
-    this.x = x;
-    this.y = y;
-    
-    this.boatP1 = '0';
-    this.boatP2 = '0';
-
-}
-
 function Tablero(){
     
     this.matriz = [["."]];

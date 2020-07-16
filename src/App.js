@@ -1,9 +1,22 @@
 import React,{Component} from 'react';
+import axios from 'axions';
 import BattleShip from './BattleShip';
 import './App.css';
 import testString from './testString';
 import tableComponent from './tableComponent';
 import Tablero from './ex web'
+
+const apiUrl = 'https://battleship.iic2513.phobos.cl';
+const accessToken = '';
+
+
+const authAxios = axios.create({
+	baseURL: apiUrl,
+	headers:{
+		Authorization: `Bearer ${accessToken}`,
+		Content-Type: 'JSON'
+	}
+})
 
 
 function App() {
@@ -12,6 +25,11 @@ function App() {
 	table6.tableReady()
 	table6.printMatrix();
 
+	const fetchData = React.useCallback(async()=>{
+		try{
+			const result = await authAxios.post('/games')
+		}
+	})
 	let testStringApp = testString;
 
   return (
