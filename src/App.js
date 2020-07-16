@@ -14,8 +14,6 @@ const email = 'mrschudeck@uc.cl'
 const numeroAlumno = '16638530'
 
 
-
-
 function App (){
 
 	const testStringApp = testString;
@@ -32,23 +30,22 @@ function App (){
 				body:JSON.stringify({}),
 				headers:{
 					"Authorization": `Bearer ${accessToken}`,
-					"Content-Type": "application/json",
+					"Content-Type": "application/json"
 				}
-			});
-			console.log(result);
+			}).then(console.log("awa owo")).then(result=>console.log(result.json()));
 
 		};
 		fetchData();
 	},[]);
 
 	
-	
 	return (
     	<div className="App">
 			<h1>{testStringApp}</h1>
 			<h1>{result}</h1>
 			<h1>holi test</h1>
-			<BattleShip tablero = {tablero6}/>
+			<BattleShip tablero = {tablero6}
+						accessToken = {accessToken}/>
 	      	
 		</div>
 	);

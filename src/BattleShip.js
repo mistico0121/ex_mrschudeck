@@ -6,31 +6,54 @@ const nombreCurrentUser = {0: "[Usuario]", 1:"[Computador]"}
 
 class BattleShip extends Component{
 	//ALL INFO ON APP, AND HOW IT CHANGES OVER TIME :DDD
-	state = {
-		boats: ['F1', 'F2', 'F3', 'F4', 'C1', 'C2', 'C3', 'D1', 'D2', 'P1'],
-		currentBoatSelect: '',
-		matriz: [],
-		readyBoats:[],
-		readyToStart:0,
-		rendirse: 0,
-		gameStarted:0,
-		currentMove: 0,
-		tablero: this.props.tablero,
-		//ACÁ GUARDAREMOS LOS LOGS QUE GENERE EL PROGRAMA DURANTE EJECUCION
-		//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
-		logs:[],
-		testing:0,
-		currentActivePlayer:0
-	};
+	constructor(props){
+		super(props);
+	
+		this.state = {
+			boats: ['F1', 'F2', 'F3', 'F4', 'C1', 'C2', 'C3', 'D1', 'D2', 'P1'],
+			currentBoatSelect: '',
+			matriz: [],
+			readyBoats:[],
+			readyToStart:0,
+			rendirse: 0,
+			gameStarted:0,
+			currentMove: 0,
+			gameId:undefined,
+			tablero: this.props.tablero,
+			//ACÁ GUARDAREMOS LOS LOGS QUE GENERE EL PROGRAMA DURANTE EJECUCION
+			//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
+			logs:[],
+			testing:0,
+			currentActivePlayer:0
+		};
+	}
+	componentDidMount(){
+		fetch("https://battleship.iic2513.phobos.cl/games",{
+				method:'POST',
+				body:JSON.stringify({}),
+				headers:{
+					"Authorization": `Bearer ${this.props.accessToken}`,
+					"Content-Type": "application/json"
+				}
+			}).then((response) => response.json())
+				.then(data=>this.setState({gameId:data.gameId}));
+					//}).then(gameId => this.setState({gameId:gameId.json()}));
 
 
+	}
 
 	getInitialState() {
 		return {'tablero': this.props.tablero};
 		}
 
+	cellGetsShot = (posX,posY)=>{
+		//SE ASUME QUE INFO RECIBIDA DESDE API NO SERÁ ERRÓNEA
+
+
+	}
 
 	onBoardUpdate(stringReceived) {
+		//EL SETEO DE BOTES NO SE MARCA EN LOG, PUES VIENEN CON EL CÓDIGO SATÁNICO
 		if (stringReceived=='666'){
 			this.setState((prevState)=>({
 				tablero:this.props.tablero,
@@ -151,7 +174,10 @@ class BattleShip extends Component{
 
 				<React.Fragment>
 						<h2>el usuario activo es {nombreCurrentUser[this.state.currentActivePlayer]}</h2>
+						<h2>el gameId es {this.state.gameId}</h2>
+
 						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular cambio de turno</button>
+						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular Disparo PC en casilla 4 4</button>
 
 
 						<div id = 'botes-select'>
@@ -236,6 +262,8 @@ class BattleShip extends Component{
 
 													<button className = 'btn btn-primary' onClick = {()=>this.surrenderGame()}>Rendirse</button>
 												</React.Fragment>:
+												//SI NO ES EL JUGADOR ACTIVO, TODOS LOS BOTONES QUEDAN DESACTIVADOS
+
 												<React.Fragment>
 													<button className = 'btn btn-deactivated'>Move</button>
 													<button className = 'btn btn-deactivated'>Shoot</button>
@@ -245,7 +273,6 @@ class BattleShip extends Component{
 												
 												</React.Fragment>
 
-												//SI NO ES EL JUGADOR ACTIVO, TODOS LOS BOTONES QUEDAN DESACTIVADOS
 												
 											}
 										</React.Fragment>:
