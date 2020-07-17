@@ -8,69 +8,30 @@ import Tablero from './ex web'
 
 
 //Hardcodeado por mientras. Obtenido con postman
-const apiUrl = 'https://battleship.iic2513.phobos.cl';
-const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1yc2NodWRlY2tAdWMuY2wiLCJzdHVkZW50TnVtYmVyIjoiMTY2Mzg1MzAiLCJpYXQiOjE1OTQ5MTk2Mjd9.5w7ynhq3sF1xZMwrF3iqKDmD0pQRZrokvPLpDC-CD04";
+const apiUrl = "https://battleship.iic2513.phobos.cl";
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1yc2NodWRlY2tAdWMuY2wiLCJzdHVkZW50TnVtYmVyIjoiMTY2Mzg1MzAiLCJpYXQiOjE1OTQ5MzEzNTl9.fhMW_NC3V2J-AXWvjcmWKBsYAAhB_IXrrgi6S6sX2Qk'
 const email = 'mrschudeck@uc.cl'
 const numeroAlumno = '16638530'
 
 
-const authAxios = axios.create({
-	baseURL: apiUrl,
-	headers:{
-		'Content-Type': 'application/json'
-	},
-	body:{
-	    "email": {email},
-	    "studentNumber": {numeroAlumno}
-	}
+function App (){
 
-})
+	const testStringApp = testString;
+	let tablero6 = new Tablero();
+	tablero6.tableReady();
 
-async function postToApi(baseURL, mode, data){
-	return (await fetch(`${apiUrl}${mode}`),{
-		method:'post',
-		headers:{
-			'Authorization': `Bearer ${accessToken}`,
-			'Content-Type': 'application/json'
-		},
-		body: data
-	});
-}
-
-
-function App() {
-
-	const [requestError, setRequestError] = useState();
-
-
-	let table6 = new Tablero();
-	table6.tableReady()
-
-	let testStringApp = testString;
-
-	const fetchData = React.useCallback(async()=>{
-		try{
-			console.log('estoy acá owo')
-
-			const result = await authAxios.put('/auth');
-			testStringApp = result;
-		} catch (err){
-			console.log('o quizas estoy aca')
-
-			setRequestError(err.message);
-
-			testStringApp = err.message;
-		}
-	});
-
-  return (
-    <div className="App">
+	const [data, setData] = useState({ 'gameid':''});
+	let result;
+		
+	return (
+    	<div className="App">
 			<h1>{testStringApp}</h1>
-			<h1>holi {requestError}</h1>
-			<BattleShip tablero={table6}/>
-      
+			<BattleShip tablero = {tablero6}
+						accessToken = {accessToken}/>
+	      	
 		</div>
-  );
+	);
+	
 }
 
 export default App;

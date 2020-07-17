@@ -81,6 +81,10 @@ body {
 }
 
 .btn-deactivated {
+
+  padding:5px;
+  margin:5px;
+
   color: #fff;
   background-color: #999999;
   border-color: #999999;
@@ -131,7 +135,8 @@ body {
 }
 
 #panel-control{
-  background-color: #ac8f9c;
+  border:1px solid #ecf542;
+  background-color: #ffffff;
   padding:20px;
   width: 350px;
 }
@@ -161,6 +166,9 @@ body {
   height: 400px;
   overflow: scroll;
   padding:20px;
+  border:1px solid #ecf542;
+
+
 
 
 }
