@@ -5,7 +5,7 @@ import TableComponent from './tableComponent'
 const nombreCurrentUser = {0: "[Usuario]", 1:"[Computador]"}
 const nombreAccion = {0: "Insertando", 1:"Mover", 2:"Disparar"}
 let dictAccion = {1:'MOVE', 2:'FIRE'}
-
+let dictEsp = {'MOVE': 'Mover', 'FIRE': 'Disparo', 'SOUTH': 'Sur', 'NORTH':'Norte', 'EAST': 'Este', 'WEST': 'Oeste'}
 
 //Hardcodeado por mientras. Obtenido con postman
 const apiUrl = "https://battleship.iic2513.phobos.cl";
@@ -124,7 +124,7 @@ class BattleShip extends Component{
 		if (data.action.type == 'FIRE'){
 			this.cellGetsShot(data.action.ship, data.action.row, data.action.column);
 		} else if (data.action.type == 'MOVE'){
-			let stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${data.action.type} - ${data.action.ship} - ${data.action.direction} - ${data.action.quantity}`
+			let stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${dictEsp[data.action.type]} - ${data.action.ship} - ${dictEsp[data.action.direction]} - ${data.action.quantity}`
 			this.setState((prevState)=>({
 				tablero:this.props.tablero,
 				currentBoatSelect: '-',
@@ -147,7 +147,7 @@ class BattleShip extends Component{
 
 		if (code==1){
 			//MOVER, ARMAMOS STRING BITACORA Y DATA
-	 		stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${action} - ${botecito} - ${this.props.tablero.direction} - ${this.props.tablero.dif1}`
+	 		stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${dictEsp[action]} - ${botecito} - ${dictEsp[this.props.tablero.direction]} - ${this.props.tablero.dif1}`
 
 			data = {
 				"action":{
@@ -160,7 +160,7 @@ class BattleShip extends Component{
 			}
 		}else if (code==2){
 			//DISPARO, ARMAMOS STRING BITACORA Y DATA
-	 		stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${action} - ${botecito} - ${String.fromCharCode(64+col)}${row}`
+	 		stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${dictEsp[action]} - ${botecito} - ${String.fromCharCode(64+col)}${row}`
 
 			data = {
 				"action":{
@@ -173,6 +173,8 @@ class BattleShip extends Component{
 			}
 
 		}
+
+
 
 		if (this.state.events.length>0){
 			data["events"] = []
