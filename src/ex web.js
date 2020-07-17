@@ -63,7 +63,7 @@ function Tablero(){
     this.player1 = new Player();
     this.globalBoatDict = {};
     this.placedBoats = [];
-    this.importantMessage = "";
+    this.lastDead = "";
     this.direction = '';
     this.dif1 = 0;
     //this.player2 = new Player();
@@ -260,7 +260,7 @@ function Tablero(){
             console.log(`el bote era ${shotId}`);
             this.globalBoatDict[shotPos].status = 0;
             console.log(`el status del bote  es ${this.player1.boatList[shotBoatIndex].status}`);
-
+            this.lastDead=this.matriz[posX+1][posY+1];
             this.matriz[posX][posY] = 'Z';
             this.player1.boatCount--;
             return true
