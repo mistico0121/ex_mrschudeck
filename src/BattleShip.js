@@ -332,6 +332,19 @@ class BattleShip extends Component{
 
 						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular cambio de turno</button>
 
+						{
+							!this.state.gameStarted?
+							<React.Fragment>
+								<h2>Haga click en un ícono para seleccionar un bote, luego haga click en una casilla para insertarlo</h2> 
+								<h3>Si no está conforme con su elección, reinicie el tablero</h3> 
+
+							</React.Fragment>:
+							<React.Fragment>
+
+							</React.Fragment>
+
+						}
+
 						<div id = 'botes-select'>
 
 						{
