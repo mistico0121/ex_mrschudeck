@@ -23,22 +23,6 @@ function App (){
 	const [data, setData] = useState({ 'gameid':''});
 	let result;
 		
-	React.useEffect(() =>{
-		const fetchData = async() => {
-			result = await fetch("https://battleship.iic2513.phobos.cl/games",{
-				method:'POST',
-				body:JSON.stringify({}),
-				headers:{
-					"Authorization": `Bearer ${accessToken}`,
-					"Content-Type": "application/json"
-				}
-			}).then(result=>console.log(result.json()));
-
-		};
-		fetchData();
-	},[]);
-
-	
 	return (
     	<div className="App">
 			<h1>{testStringApp}</h1>

@@ -7,6 +7,12 @@ const nombreAccion = {0: "Insertando", 1:"Mover", 2:"Disparar"}
 let dictAccion = {1:'MOVE', 2:'FIRE'}
 
 
+//Hardcodeado por mientras. Obtenido con postman
+const apiUrl = "https://battleship.iic2513.phobos.cl";
+const email = 'mrschudeck@uc.cl'
+const numeroAlumno = '16638530'
+
+
 class BattleShip extends Component{
 	//ALL INFO ON APP, AND HOW IT CHANGES OVER TIME :DDD
 	constructor(props){
@@ -22,6 +28,7 @@ class BattleShip extends Component{
 			gameStarted:0,
 			currentMove: 0,
 			gameId:undefined,
+			accessToken:undefined,
 			tablero: this.props.tablero,
 			//ACÁ GUARDAREMOS LOS LOGS QUE GENERE EL PROGRAMA DURANTE EJECUCION
 			//logs: ['aeeeeeeee','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr','eeerrrr']
@@ -31,16 +38,22 @@ class BattleShip extends Component{
 		};
 	}
 
-	//Setea el gameId
+	//Setea el gameId y el authToken. Es muy feo, pero funciona, promesa ;)
 	componentDidMount(){
-		fetch("https://battleship.iic2513.phobos.cl/games",{
+		fetch("https://battleship.iic2513.phobos.cl/auth",{
+				method:'PUT',
+				body:JSON.stringify({"email":email, "studentNumber":numeroAlumno}),
+				headers:{
+					"Content-Type": "application/json"
+				}
+			}).then((responsee) => responsee.json()).then((data2)=>this.setState({accessToken:data2.token})).then(whatever => fetch("https://battleship.iic2513.phobos.cl/games",{
 				method:'POST',
 				body:JSON.stringify({}),
 				headers:{
-					"Authorization": `Bearer ${this.props.accessToken}`,
+					"Authorization": `Bearer ${this.state.accessToken}`,
 					"Content-Type": "application/json"
 				}
-			}).then((response) => response.json())
+			})).then((response) => response.json())
 				.then(data=>this.setState({gameId:data.gameId}));
 					//}).then(gameId => this.setState({gameId:gameId.json()}));
 	}
@@ -62,6 +75,8 @@ class BattleShip extends Component{
 				currentBoatSelect: '-',
 				currentMove:0,
 				logs: [...prevState.logs,stringsToShow],
+				currentActivePlayer:0
+
 			}));
 
 
@@ -71,11 +86,22 @@ class BattleShip extends Component{
 		console.log("data es",data);
 		if (data.action.type == 'FIRE'){
 			this.cellGetsShot(data.action.ship, data.action.row, data.action.column);
+		} else if (data.action.type == 'MOVE'){
+			let stringToShow= `${nombreCurrentUser[this.state.currentActivePlayer]}: ${data.action.type} - ${data.action.ship} - ${data.action.direction} - ${data.action.quantity}`
+			this.setState((prevState)=>({
+				tablero:this.props.tablero,
+				currentBoatSelect: '-',
+				currentMove:'-',
+				logs: [...prevState.logs,stringToShow],
+				currentActivePlayer:0
+				
+
+			}))
 		}
 	} 
 
 
-	onBoardUpdate(code,botecito, action ,row, col) {
+	async onBoardUpdate(code,botecito, action ,row, col) {
 		//EL SETEO DE BOTES NO SE MARCA EN LOG, PUES VIENEN CON EL CÓDIGO SATÁNICO
 		//ACÁ SE DEBIERA HACER LA MAGIA CON EL SERVER
 
@@ -124,18 +150,8 @@ class BattleShip extends Component{
 				currentBoatSelect: '-',
 				currentMove:'-',
 				logs: [...prevState.logs,stringToShow],
-				currentActivePlayer:1
-
-
-			}));
-
-		}
-
-		console.log(data)
-
-		//SE MANDA AL SERVER Y SE ESPERA RESPUESTA
-		if (code!='666'){
-			fetch(`https://battleship.iic2513.phobos.cl/games/${this.state.gameId}/action`,{
+				currentActivePlayer:1 
+			}),()=> fetch(`https://battleship.iic2513.phobos.cl/games/${this.state.gameId}/action`,{
 					method:'POST',
 					body:JSON.stringify(data),
 					headers:{
@@ -143,7 +159,15 @@ class BattleShip extends Component{
 						"Content-Type": "application/json"
 					}
 				}).then((response) => response.json())
-					.then((dataa)=> this.dataHandler(dataa));
+					.then((dataa)=> this.dataHandler(dataa)));
+
+		}
+
+		console.log(data)
+
+		//SE MANDA AL SERVER Y SE ESPERA RESPUESTA
+		if (code!='666'){
+			
 						//}).then(gameId => this.setState({gameId:gameId.json()}));
 			}
 		//SE ACTUALIZA TABLERO
@@ -249,9 +273,9 @@ class BattleShip extends Component{
 			{
 				!this.state.rendirse ?
 
-				<React.Fragment>
+				<React.Fragment>						
+
 						<h2>el usuario activo es {nombreCurrentUser[this.state.currentActivePlayer]}</h2>
-						<h2>el gameId es {this.state.gameId}</h2>
 
 						<button className = 'btn btn-primary' onClick = {()=>this.changeCurrentActivePlayer()}>Simular cambio de turno</button>
 						<button className = 'btn btn-primary' onClick = {()=>this.cellGetsShot('F1',4,4)}>Simular Disparo PC en casilla E5</button>
